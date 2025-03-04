@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from "react";
-import Delete from "./Delete"; 
+import Delete from "./Delete";
 import Edit from "./Edit";
-import '../styles/AddComment.css';
+import "../styles/AddComment.css";
 
 const AddComment = () => {
     const [currentUser, setCurrentUser] = useState(null);
     const [messages, setMessages] = useState([]);
     const [newMessage, setNewMessage] = useState("");
     const [editingCommentId, setEditingCommentId] = useState(null);
+    const [userVotes, setUserVotes] = useState({}); // Tracks votes per comment
 
     useEffect(() => {
         fetch("/data/data.json")
@@ -38,14 +39,50 @@ const AddComment = () => {
     };
 
     const handleUpdateComment = (commentId, updatedContent) => {
-        const updatedMessages = messages.map((msg) => {
+        setMessages(messages.map(msg =>
+            msg.id === commentId ? { ...msg, content: updatedContent } : msg
+        ));
+        setEditingCommentId(null);
+    };
+
+    const handleVote = (commentId, voteType) => {
+        setMessages(messages.map(msg => {
             if (msg.id === commentId) {
-                return { ...msg, content: updatedContent };
+                const upvoteSelected = userVotes[commentId] === "upvote";
+                const downvoteSelected = userVotes[commentId] === "downvote";
+                let newScore = msg.score;
+                let newVoteState = "none";
+
+                if (voteType === "upvote") {
+                    if (!upvoteSelected && !downvoteSelected) {
+                        newScore += 1;
+                        newVoteState = "upvote";
+                    } else if (!upvoteSelected && downvoteSelected) {
+                        newScore += 2;
+                        newVoteState = "upvote";
+                    } else if (upvoteSelected) {
+                        newScore -= 1;
+                        newVoteState = "none";
+                    }
+                } else if (voteType === "downvote") {
+                    if (!downvoteSelected && !upvoteSelected) {
+                        newScore -= 1;
+                        newVoteState = "downvote";
+                    } else if (!downvoteSelected && upvoteSelected) {
+                        newScore -= 2;
+                        newVoteState = "downvote";
+                    } else if (downvoteSelected) {
+                        newScore += 1;
+                        newVoteState = "none";
+                    }
+                }
+
+                setUserVotes({ ...userVotes, [commentId]: newVoteState });
+
+                return { ...msg, score: newScore };
             }
             return msg;
-        });
-        setMessages(updatedMessages);
-        setEditingCommentId(null);
+        }));
     };
 
     return (
@@ -53,9 +90,23 @@ const AddComment = () => {
             {messages.map((msg) => (
                 <div key={msg.id} className="contianer">
                     <button className="score-box">
-                        <img src="./images/icon-plus.svg" alt="plus" className="cursor-pointer" />
-                        <h5>{msg.score}</h5>
-                        <img src="./images/icon-minus.svg" alt="minus" className="cursor-pointer" />
+                        <img 
+                            src="./images/icon-plus.svg" 
+                            alt="plus" 
+                            className={`cursor-pointer ${userVotes[msg.id] === "upvote" ? "voted" : ""}`}
+                            data-id="upvote-button"
+                            data-voted={userVotes[msg.id] === "upvote"}
+                            onClick={() => handleVote(msg.id, "upvote")} 
+                        />
+                        <h5 data-id="score-count">{msg.score}</h5>
+                        <img 
+                            src="./images/icon-minus.svg" 
+                            alt="minus" 
+                            className={`cursor-pointer ${userVotes[msg.id] === "downvote" ? "voted" : ""}`}
+                            data-id="downvote-button"
+                            data-voted={userVotes[msg.id] === "downvote"}
+                            onClick={() => handleVote(msg.id, "downvote")} 
+                        />
                     </button>
                     <div className="content-box">
                         <div className="innerbox">
@@ -73,7 +124,7 @@ const AddComment = () => {
                                             src="./images/icon-edit.svg" 
                                             alt="update" 
                                             onClick={() => setEditingCommentId(msg.id)}
-                                            style={{cursor:"pointer"}}
+                                            style={{ cursor: "pointer" }}
                                         />
                                         <h5 onClick={() => setEditingCommentId(msg.id)}>Edit</h5>
                                     </>
@@ -115,4 +166,7 @@ const AddComment = () => {
         </div>
     );
 };
+
+
+
 export default AddComment;
