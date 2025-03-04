@@ -8,6 +8,7 @@ const AddComment = () => {
     const [messages, setMessages] = useState([]);
     const [newMessage, setNewMessage] = useState("");
     const [editingCommentId, setEditingCommentId] = useState(null);
+    const [userVotes, setUserVotes] = useState({}); // To track user votes
 
     useEffect(() => {
         fetch("/data/data.json")
@@ -38,14 +39,43 @@ const AddComment = () => {
     };
 
     const handleUpdateComment = (commentId, updatedContent) => {
-        const updatedMessages = messages.map((msg) => {
+        setMessages(messages.map(msg =>
+            msg.id === commentId ? { ...msg, content: updatedContent } : msg
+        ));
+        setEditingCommentId(null);
+    };
+
+    const handleVote = (commentId, type) => {
+        setMessages(messages.map(msg => {
             if (msg.id === commentId) {
-                return { ...msg, content: updatedContent };
+                const prevVote = userVotes[commentId] || 0;
+                let newVoteState = 0;
+                let voteChange = 0;
+
+                if (type === "up") {
+                    if (prevVote === 1) {
+                        voteChange = -1; // Undo upvote
+                        newVoteState = 0;
+                    } else {
+                        voteChange = 1; // Upvote
+                        newVoteState = 1;
+                    }
+                } else if (type === "down") {
+                    if (prevVote === -1) {
+                        voteChange = 1; // Undo downvote
+                        newVoteState = 0;
+                    } else {
+                        voteChange = -1; // Downvote
+                        newVoteState = -1;
+                    }
+                }
+
+                setUserVotes({ ...userVotes, [commentId]: newVoteState });
+
+                return { ...msg, score: msg.score + voteChange };
             }
             return msg;
-        });
-        setMessages(updatedMessages);
-        setEditingCommentId(null);
+        }));
     };
 
     return (
@@ -53,9 +83,19 @@ const AddComment = () => {
             {messages.map((msg) => (
                 <div key={msg.id} className="contianer">
                     <button className="score-box">
-                        <img src="./images/icon-plus.svg" alt="plus" className="cursor-pointer" />
+                        <img 
+                            src="./images/icon-plus.svg" 
+                            alt="plus" 
+                            className="cursor-pointer"
+                            onClick={() => handleVote(msg.id, "up")} 
+                        />
                         <h5>{msg.score}</h5>
-                        <img src="./images/icon-minus.svg" alt="minus" className="cursor-pointer" />
+                        <img 
+                            src="./images/icon-minus.svg" 
+                            alt="minus" 
+                            className="cursor-pointer"
+                            onClick={() => handleVote(msg.id, "down")} 
+                        />
                     </button>
                     <div className="content-box">
                         <div className="innerbox">
@@ -73,7 +113,7 @@ const AddComment = () => {
                                             src="./images/icon-edit.svg" 
                                             alt="update" 
                                             onClick={() => setEditingCommentId(msg.id)}
-                                            style={{cursor:"pointer"}}
+                                            style={{ cursor: "pointer" }}
                                         />
                                         <h5 onClick={() => setEditingCommentId(msg.id)}>Edit</h5>
                                     </>
@@ -115,4 +155,5 @@ const AddComment = () => {
         </div>
     );
 };
+
 export default AddComment;
