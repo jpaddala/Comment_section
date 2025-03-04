@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from "react";
-import Delete from "./Delete"; 
+import Delete from "./Delete";
 import Edit from "./Edit";
-import '../styles/AddComment.css';
+import "../styles/AddComment.css";
 
 const AddComment = () => {
     const [currentUser, setCurrentUser] = useState(null);
     const [messages, setMessages] = useState([]);
     const [newMessage, setNewMessage] = useState("");
     const [editingCommentId, setEditingCommentId] = useState(null);
-    const [userVotes, setUserVotes] = useState({}); // To track user votes
+    const [userVotes, setUserVotes] = useState({}); // Tracks votes per comment
 
     useEffect(() => {
         fetch("/data/data.json")
@@ -45,34 +45,41 @@ const AddComment = () => {
         setEditingCommentId(null);
     };
 
-    const handleVote = (commentId, type) => {
+    const handleVote = (commentId, voteType) => {
         setMessages(messages.map(msg => {
             if (msg.id === commentId) {
-                const prevVote = userVotes[commentId] || 0;
-                let newVoteState = 0;
-                let voteChange = 0;
+                const upvoteSelected = userVotes[commentId] === "upvote";
+                const downvoteSelected = userVotes[commentId] === "downvote";
+                let newScore = msg.score;
+                let newVoteState = "none";
 
-                if (type === "up") {
-                    if (prevVote === 1) {
-                        voteChange = -1; // Undo upvote
-                        newVoteState = 0;
-                    } else {
-                        voteChange = 1; // Upvote
-                        newVoteState = 1;
+                if (voteType === "upvote") {
+                    if (!upvoteSelected && !downvoteSelected) {
+                        newScore += 1;
+                        newVoteState = "upvote";
+                    } else if (!upvoteSelected && downvoteSelected) {
+                        newScore += 2;
+                        newVoteState = "upvote";
+                    } else if (upvoteSelected) {
+                        newScore -= 1;
+                        newVoteState = "none";
                     }
-                } else if (type === "down") {
-                    if (prevVote === -1) {
-                        voteChange = 1; // Undo downvote
-                        newVoteState = 0;
-                    } else {
-                        voteChange = -1; // Downvote
-                        newVoteState = -1;
+                } else if (voteType === "downvote") {
+                    if (!downvoteSelected && !upvoteSelected) {
+                        newScore -= 1;
+                        newVoteState = "downvote";
+                    } else if (!downvoteSelected && upvoteSelected) {
+                        newScore -= 2;
+                        newVoteState = "downvote";
+                    } else if (downvoteSelected) {
+                        newScore += 1;
+                        newVoteState = "none";
                     }
                 }
 
                 setUserVotes({ ...userVotes, [commentId]: newVoteState });
 
-                return { ...msg, score: msg.score + voteChange };
+                return { ...msg, score: newScore };
             }
             return msg;
         }));
@@ -86,15 +93,19 @@ const AddComment = () => {
                         <img 
                             src="./images/icon-plus.svg" 
                             alt="plus" 
-                            className="cursor-pointer"
-                            onClick={() => handleVote(msg.id, "up")} 
+                            className={`cursor-pointer ${userVotes[msg.id] === "upvote" ? "voted" : ""}`}
+                            data-id="upvote-button"
+                            data-voted={userVotes[msg.id] === "upvote"}
+                            onClick={() => handleVote(msg.id, "upvote")} 
                         />
-                        <h5>{msg.score}</h5>
+                        <h5 data-id="score-count">{msg.score}</h5>
                         <img 
                             src="./images/icon-minus.svg" 
                             alt="minus" 
-                            className="cursor-pointer"
-                            onClick={() => handleVote(msg.id, "down")} 
+                            className={`cursor-pointer ${userVotes[msg.id] === "downvote" ? "voted" : ""}`}
+                            data-id="downvote-button"
+                            data-voted={userVotes[msg.id] === "downvote"}
+                            onClick={() => handleVote(msg.id, "downvote")} 
                         />
                     </button>
                     <div className="content-box">
