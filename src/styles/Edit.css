@@ -1,47 +1,40 @@
-@import url('https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,100..900;1,100..900&family=Rubik:ital,wght@0,300..900;1,300..900&display=swap');
-
 .edit-container {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-  }
-  
-  .edit-textarea {
-    width: 35rem;
-    min-height: 80px;
-    padding: 10px;
-    font-size: 1rem;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    resize: vertical;
-  }
-  
-  .edit-actions {
-    display: flex;
-    justify-content: flex-end;
-    gap: 10px;
-  }
-  
-  .cancel-btn,
-  .update-btn {
-    padding: 8px 12px;
-    font-size: 0.9rem;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-  }
-  
-  .cancel-btn {
-    background-color: #ccc;
-    color: white;
-    font-family: "Rubik", sans-serif;
-  }
-  
-  .update-btn {
-    background-color: hsl(238, 40%, 52%);
-    color: #fff;
-    font-family: "Rubik", sans-serif;
-  }
-  .update-btn:hover{
-    background-color:   hsl(239, 49%, 75%);
-  }
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.edit-textarea {
+  width: 35rem;
+  min-height: 80px;
+  padding: 10px;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  resize: vertical;
+}
+
+.edit-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.cancel-btn,
+.update-btn {
+  padding: 8px 12px;
+  font-size: 0.9rem;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.cancel-btn {
+  background-color: #ccc;
+  color: #000;
+}
+
+.update-btn {
+  background-color: #ED6468;
+  color: #fff;
+}

@@ -1,57 +1,30 @@
-// import React from "react";
-// import '../styles/Delete.css';
-
-// const Delete = ({ commentId, onDelete }) => {
-//   const handleDelete = () => {
-//     if (window.confirm("Are you sure you want to delete this comment?")) {
-//       onDelete(commentId);
-//     }
-//   };
-  
-//   return (
-//     <button className="delete-button" onClick={handleDelete}>
-//       <img className="icon-delete" src="./images/icon-delete.svg" alt="delete" />
-//       <h5>Delete</h5>
-//     </button>
-//   );
-// };
-
-
-// export default Delete;
 import React, { useState } from "react";
 import "../styles/Delete.css";
 
 const Delete = ({ commentId, onDelete }) => {
-  const [showPopup, setShowPopup] = useState(false);
-
-  const handleDeleteClick = () => {
-    setShowPopup(true); // Show the delete confirmation popup
-  };
-
-  const handleCancel = () => {
-    setShowPopup(false); // Hide the popup when "NO, CANCEL" is clicked
-  };
-
+  const [showModal, setShowModal] = useState(false);
+  const openModal = () => setShowModal(true);
+  const closeModal = () => setShowModal(false);
   const handleConfirmDelete = () => {
-    onDelete(commentId); // Delete the comment
-    setShowPopup(false); // Hide the popup after deletion
+    onDelete(commentId);
+    closeModal();
   };
-
   return (
     <>
-      <button className="delete-button" onClick={handleDeleteClick}>
+      <button className="delete-button" onClick={openModal}>
         <img className="icon-delete" src="./images/icon-delete.svg" alt="delete" />
         <h5>Delete</h5>
       </button>
-
-      {showPopup && (
-        <div className="overlay">
-          <div className="popup">
-            <h2>Delete comment</h2>
-            <p>Are you sure you want to delete this comment? This will remove the comment and can't be undone.</p>
-            <div className="btns">
-              <button id="no" onClick={handleCancel}>NO, CANCEL</button>
-              <button id="yes" onClick={handleConfirmDelete}>YES, DELETE</button>
+      {showModal && (
+        <div className="modal-overlay">
+          <div className="Delete">
+            <div className="item1">
+              <h1>Delete comment</h1>
+              <p>Are you sure you want to delete this <br></br> comment? This will remove the comment <br></br>and can't be undone.</p>
+            </div>
+            <div className="item2">
+              <button onClick={closeModal}>NO, CANCEL</button>
+              <button onClick={handleConfirmDelete}>YES, DELETE</button>
             </div>
           </div>
         </div>
