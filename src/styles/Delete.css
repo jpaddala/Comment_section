@@ -26,12 +26,15 @@
   .item1 h1 {
     margin-bottom: 0.75rem;
     font-size: 1.2rem;
+    color:hsl(211, 10%, 45%)
   }
   
   .item1 p {
     line-height: 1.4;
     color: #555;
-    font-size: 0.95rem;      
+    font-size: 0.95rem; 
+    font-weight: 500;
+    font-family: "Rubik", sans-serif;    
   }
   
   .item2 {
@@ -39,7 +42,8 @@
     justify-content: flex-end;
     gap: 0.5rem;
     margin-top: -1rem; 
-    margin-right: 4.5rem;         
+    margin-right: 4.5rem;
+         
   }
   .item2 button {
     border: none;
@@ -50,10 +54,11 @@
     min-width: 90px;           
     font-weight: 600;           
     text-transform: uppercase;
+
   }
   
   .item2 button:first-child {
-    background-color: #636060;
+    background-color: hsl(211, 10%, 45%);
     color: #fff;
   }
   
@@ -61,12 +66,12 @@
     background-color: #444;
   }
   .item2 button:last-child {
-    background-color: #eb6060;
+    background-color:  hsl(358, 79%, 66%);
     color: #fff;
   }
   
   .item2 button:last-child:hover {
-    background-color: #c53030;
+    background-color: hsl(357, 100%, 86%);
   }
   
  
@@ -80,6 +85,7 @@
     color: #ED6468;
     font-weight: 500;
     font-size: 1rem;
+    
   }
   .icon-delete {
     width: 20px;

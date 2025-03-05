@@ -27,14 +27,21 @@
   border: none;
   border-radius: 5px;
   cursor: pointer;
+  font-family: "Rubik", sans-serif;
 }
 
 .cancel-btn {
+  background-color: hsl(211, 10%, 45%);
+  color: white
+}
+.cancel-btn:hover{
   background-color: #ccc;
-  color: #000;
 }
 
 .update-btn {
-  background-color: #ED6468;
+  background-color: hsl(238, 40%, 52%);
   color: #fff;
+}
+.update-btn:hover{
+  background-color:  hsl(239, 57%, 85%);
 }

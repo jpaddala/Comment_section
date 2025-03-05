@@ -119,11 +119,12 @@ const AddComment = () => {
                             </div>
                         </div>
                         <div className="para">
-                            {editingCommentId === msg.id ? (
+                        {editingCommentId === msg.id ? (
                                 <Edit comment={msg} onUpdate={handleUpdateComment} onCancel={() => setEditingCommentId(null)} />
-                            ) : (
+                        ) : (
                                 <p>{msg.content}</p>
-                            )}
+                        )}
+
                         </div>
                     </div>
                 </div>
@@ -155,7 +156,7 @@ const AddComment = () => {
                                         <>
                                             <Delete commentId={reply.id} onDelete={handleDeleteComment} />
                                             <img className="icon-edit" src="./images/icon-edit.svg" alt="update" onClick={() => setEditingCommentId(reply.id)} />
-                                            <h5>Edit</h5>
+                                            <h5 onClick={() => setEditingCommentId(msg.id)}>Edit</h5>
                                         </>
                                         ) : (
                                         <>

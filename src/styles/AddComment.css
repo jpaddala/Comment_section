@@ -10,7 +10,7 @@ span{
 .innerbox{
     display: flex;
     flex-direction: row;
-    gap:20rem;
+    gap:19rem;
 }
 .section{
     display: flex;
@@ -99,7 +99,14 @@ p{
     width: 32rem;
     height: 5rem;
     border: 2px solid hsl(238, 40%, 52%); 
+    border-radius: 5px;
+    padding: 10px;
 }
+.container1 textarea:focus {
+    outline: none;
+    border-color: hsl(239, 57%, 85%);
+    box-shadow: 0 0 5px hsl(239, 57%, 85%);
+  }
 .container1 button{
     background-color:  hsl(238, 40%, 52%);;
     color: white;
@@ -107,6 +114,13 @@ p{
     height: 2.5rem;
     width: 5rem;
     border-radius: 0.5rem;
+    border: none;
+}
+.container1 button:hover{
+    font-family: "Rubik", sans-serif;
+    background-color:  hsl(239, 57%, 85%);
+    cursor: pointer;
+
 }
 .icon-edit{
     margin-left: 1.5rem;
@@ -121,6 +135,11 @@ p{
 .reply-container .reply .icon-edit{
     margin-left: -9rem;
 }
+.reply-container .reply .icon-edit:hover{
+    cursor: pointer;
+}
 .reply-container  .icon-delete {
     margin-left: -15rem;
+    width: 15px;
+    height: 18px;
 }

@@ -6,10 +6,11 @@
     gap: 1rem;
     border-radius: 10px;
     padding: 1rem;
-    margin-left: 50px;
+    margin-left: -2.4rem;
     margin-top: 10px; 
     width: 600px;
     height: 130px;
+
   }
   
   .reply-user-img {
@@ -50,7 +51,7 @@
     margin-top: -4.8rem;
   }
   
-  button:hover {
+  .button1:hover {
     background-color: hsl(239, 57%, 85%);
   }
   
