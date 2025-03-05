@@ -1,140 +1,87 @@
-/* .delete-button {
-    display: flex;              
-    align-items: center;        
-    gap: 5px;                  
-    cursor: pointer;            
-    background: transparent;    
-    border: none;                
-    padding: 0;                  
-    color: #ED6468;            
-    font-weight: 500;        
-    font-size: 1rem;         
-  }
-  .icon-delete {
-    width: 14px;   
-    height: 14px;
-  }
-  .delete-button:hover {
-    opacity: 0.8;
-  } */
-   @import url('https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,100..900;1,100..900&family=Rubik:ital,wght@0,300..900;1,300..900&display=swap');
-
-/* Styles for Delete Button */
-.delete-button {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    background: none;
-    border: none;
-    cursor: pointer;
-    font-family: "Rubik", sans-serif;
-    font-size: 1rem;
-    color: hsl(358, 79%, 66%);
-    font-weight: 600;
-    transition: color 0.3s ease-in-out;
-}
-
-.delete-button:hover {
-    color: hsl(357, 100%, 75%);
-}
-
-.icon-delete {
-    width: 16px;
-    height: 16px;
-}
-
-/* Overlay Background */
-.overlay {
+.modal-overlay {
     position: fixed;
     top: 0;
     left: 0;
-    width: 100%;
+    width: 100%; 
     height: 100%;
-    background: rgba(0, 0, 0, 0.5);
+    background-color: rgba(0, 0, 0, 0.4); 
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+    z-index: 9999;
+  }
+  .Delete {
+    width: 280px;                
+    background-color: #fff;
+    border-radius: 8px;        
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
     display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 1000;
-}
-
-.popup {
-    background: white;
-    padding: 2rem;
-    border-radius: 10px;
-    width: 300px;
-    text-align: center;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-    animation: fadeIn 0.3s ease-in-out;
-    display: flex;
-    flex-direction: column;  
-    align-items:center;  
-}
-
-
-.popup h2 {
-    margin: 0; 
-    font-family: "Rubik", sans-serif;
-    font-weight: 600;
-    color: hsl(212, 24%, 26%);
-    text-align: center;
-}
-
-.popup p {
-    font-family: "Rubik", sans-serif;
-    color: hsl(211, 10%, 45%);
-    font-size: 0.9rem;
-    margin-top: 0.5rem;
+    flex-direction: column;
+    padding: 1.5rem;
+  }
+  .item1 {
+    margin-bottom: 1rem;      
+  }
+  
+  .item1 h1 {
+    margin-bottom: 0.75rem;
+    font-size: 1.2rem;
+  }
+  
+  .item1 p {
     line-height: 1.4;
-    text-align: center;
-    max-width: 250px;  
-    word-wrap: break-word;
-}
-
-/* Button Container */
-.btns {
+    color: #555;
+    font-size: 0.95rem;      
+  }
+  
+  .item2 {
     display: flex;
-    gap: 1rem;
-    justify-content: center;
-    margin-top: 1rem;
-}
-
-/* Cancel and Delete Buttons */
-#no, #yes {
-    font-family: "Rubik", sans-serif;
+    justify-content: flex-end;
+    gap: 0.5rem;
+    margin-top: -1rem; 
+    margin-right: 4.5rem;         
+  }
+  .item2 button {
     border: none;
-    padding: 0.7rem 1.2rem;
-    color: white;
-    border-radius: 5px;
+    border-radius: 4px;
     cursor: pointer;
-    font-size: 0.9rem;
+    font-size: 0.85rem;
+    line-height: 2rem;
+    min-width: 90px;           
+    font-weight: 600;           
+    text-transform: uppercase;
+  }
+  
+  .item2 button:first-child {
+    background-color: #636060;
+    color: #fff;
+  }
+  
+  .item2 button:first-child:hover {
+    background-color: #444;
+  }
+  .item2 button:last-child {
+    background-color: #eb6060;
+    color: #fff;
+  }
+  
+  .item2 button:last-child:hover {
+    background-color: #c53030;
+  }
+  
+ 
+  .delete-button {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    cursor: pointer;
+    border: none;
+    background: none;
+    color: #ED6468;
     font-weight: 500;
-    transition: background 0.3s ease-in-out;
-}
-
-#no {
-    background-color: hsl(211, 10%, 45%);
-}
-
-#no:hover {
-    background-color: hsl(211, 12%, 35%);
-}
-
-#yes {
-    background-color: hsl(358, 79%, 66%);
-}
-
-#yes:hover {
-    background-color: hsl(357, 100%, 75%);
-}
-
-/* Animation */
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-        transform: translateY(-10px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
+    font-size: 1rem;
+  }
+  .icon-delete {
+    width: 20px;
+    height: 20px;
+  }
