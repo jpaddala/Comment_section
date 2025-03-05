@@ -1,23 +1,3 @@
-// import React from "react";
-// import '../styles/Delete.css';
-
-// const Delete = ({ commentId, onDelete }) => {
-//   const handleDelete = () => {
-//     if (window.confirm("Are you sure you want to delete this comment?")) {
-//       onDelete(commentId);
-//     }
-//   };
-  
-//   return (
-//     <button className="delete-button" onClick={handleDelete}>
-//       <img className="icon-delete" src="./images/icon-delete.svg" alt="delete" />
-//       <h5>Delete</h5>
-//     </button>
-//   );
-// };
-
-
-// export default Delete;
 import React, { useState } from "react";
 import "../styles/Delete.css";
 
