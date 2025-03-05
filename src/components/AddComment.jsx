@@ -155,7 +155,7 @@ const AddComment = () => {
                                         {currentUser && reply.user.username === currentUser.username ? (
                                         <>
                                             <Delete commentId={reply.id} onDelete={handleDeleteComment} />
-                                            <img className="icon-edit" src="./images/icon-edit.svg" alt="update" onClick={() => setEditingCommentId(reply.id)} />
+                                            <img className="icon-edit" src="./images/icon-edit.svg" alt="update" onClick={() => setEditingCommentId(msg.id)} />
                                             <h5 onClick={() => setEditingCommentId(msg.id)}>Edit</h5>
                                         </>
                                         ) : (
